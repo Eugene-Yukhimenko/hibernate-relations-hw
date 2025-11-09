@@ -1,6 +1,9 @@
 package mate.academy.hibernate.relations;
 
 import java.util.List;
+import mate.academy.hibernate.relations.dao.ActorDao;
+import mate.academy.hibernate.relations.dao.CountryDao;
+import mate.academy.hibernate.relations.dao.MovieDao;
 import mate.academy.hibernate.relations.dao.impl.ActorDaoImpl;
 import mate.academy.hibernate.relations.dao.impl.CountryDaoImpl;
 import mate.academy.hibernate.relations.dao.impl.MovieDaoImpl;
@@ -20,13 +23,13 @@ public class Main {
     public static void main(String[] args) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-        CountryDaoImpl countryDao = new CountryDaoImpl(sessionFactory);
-        ActorDaoImpl actorDao = new ActorDaoImpl(sessionFactory);
-        MovieDaoImpl movieDao = new MovieDaoImpl(sessionFactory);
+        CountryDao countryDao = new CountryDaoImpl(sessionFactory);
+        ActorDao actorDao = new ActorDaoImpl(sessionFactory);
+        MovieDao movieDao = new MovieDaoImpl(sessionFactory);
 
         CountryService countryService = new CountryServiceImpl(countryDao);
         ActorService actorService = new ActorServiceImpl(actorDao);
-        final MovieService movieService = new MovieServiceImpl(movieDao);
+        MovieService movieService = new MovieServiceImpl(movieDao);
 
         Country usa = new Country("USA");
         countryService.add(usa);
