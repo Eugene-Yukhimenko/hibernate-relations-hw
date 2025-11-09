@@ -29,7 +29,7 @@ public class Main {
 
         CountryService countryService = new CountryServiceImpl(countryDao);
         ActorService actorService = new ActorServiceImpl(actorDao);
-        MovieService movieService = new MovieServiceImpl(movieDao);
+        final MovieService movieService = new MovieServiceImpl(movieDao);
 
         Country usa = new Country("USA");
         countryService.add(usa);
