@@ -15,8 +15,10 @@ public class ActorDaoImpl extends AbstractDao implements ActorDao {
 
     @Override
     public Actor add(Actor actor) {
+        Session session = null;
         Transaction tx = null;
-        try (Session session = factory.openSession()) {
+        try {
+            session = factory.openSession();
             tx = session.beginTransaction();
             session.persist(actor);
             tx.commit();
@@ -26,15 +28,25 @@ public class ActorDaoImpl extends AbstractDao implements ActorDao {
                 tx.rollback();
             }
             throw new DataProcessingException("Can't insert Actor: " + actor, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
     @Override
     public Optional<Actor> get(Long id) {
-        try (Session session = factory.openSession()) {
+        Session session = null;
+        try {
+            session = factory.openSession();
             return Optional.ofNullable(session.get(Actor.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get Actor by id " + id, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 }
